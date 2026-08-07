@@ -14,7 +14,8 @@ export const HomePage: React.FC = () => {
           Split Large Videos <span className="text-sky-400">Without Quality Loss</span>
         </h2>
         <p className="text-slate-400 text-sm md:text-base">
-          Upload multi-gigabyte video files, define exact split timestamps, and receive instant losslessly cut clips or a single ZIP package.
+          Upload multi-gigabyte video files, define exact split timestamps, and receive instant
+          losslessly cut clips or a single ZIP package.
         </p>
       </div>
 
@@ -27,7 +28,8 @@ export const HomePage: React.FC = () => {
               <div>
                 <h4 className="font-semibold text-slate-200">{selectedFile.name}</h4>
                 <p className="text-xs text-slate-400">
-                  {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB • {selectedFile.type || 'video/mp4'}
+                  {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB •{' '}
+                  {selectedFile.type || 'video/mp4'}
                 </p>
               </div>
               <Button variant="primary" size="md">
@@ -46,7 +48,8 @@ export const HomePage: React.FC = () => {
             <span>Lossless Processing</span>
           </div>
           <p className="text-xs text-slate-400">
-            FFmpeg stream copy preserves exact original video codecs, bitrate, color space, and audio channels.
+            FFmpeg stream copy preserves exact original video codecs, bitrate, color space, and
+            audio channels.
           </p>
         </Card>
 
@@ -56,7 +59,8 @@ export const HomePage: React.FC = () => {
             <span>High Performance Queue</span>
           </div>
           <p className="text-xs text-slate-400">
-            Async BullMQ queue workers process video clips in parallel without blocking main API execution.
+            Async BullMQ queue workers process video clips in parallel without blocking main API
+            execution.
           </p>
         </Card>
 
@@ -66,7 +70,8 @@ export const HomePage: React.FC = () => {
             <span>Automatic Ephemeral Cleanup</span>
           </div>
           <p className="text-xs text-slate-400">
-            Strict 60-minute retention policy ensures zero residual files remain on disk or cloud storage.
+            Strict 60-minute retention policy ensures zero residual files remain on disk or cloud
+            storage.
           </p>
         </Card>
       </div>

@@ -5,15 +5,15 @@ import { IZipService } from '../types/services.types.js';
 import { logger } from '../utils/logger.js';
 
 export class ZipService implements IZipService {
-  public async createClipsArchive(
-    jobId: string,
-    clipPaths: readonly string[]
-  ): Promise<string> {
+  public async createClipsArchive(jobId: string, clipPaths: readonly string[]): Promise<string> {
     const zipDir = path.resolve('./storage/uploads', jobId);
     await fsPromises.mkdir(zipDir, { recursive: true });
 
     const zipFilePath = path.join(zipDir, 'clips.zip');
-    logger.info({ jobId, clipCount: clipPaths.length, zipFilePath }, 'Creating streaming ZIP archive of clips');
+    logger.info(
+      { jobId, clipCount: clipPaths.length, zipFilePath },
+      'Creating streaming ZIP archive of clips'
+    );
 
     // Create binary container for zip archive
     const writeStream = fs.createWriteStream(zipFilePath);

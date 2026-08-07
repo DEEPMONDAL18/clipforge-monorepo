@@ -45,7 +45,10 @@ export class VideoProcessingJob extends BaseJob<VideoProcessingJobPayload, void>
     // 3. Locate source video file
     const outputDir = path.resolve('./storage/uploads', jobId);
     const clipsDir = path.join(outputDir, 'clips');
-    const sourcePath = path.join(outputDir, `original_${jobMetadata.originalFileName || 'video.mp4'}`);
+    const sourcePath = path.join(
+      outputDir,
+      `original_${jobMetadata.originalFileName || 'video.mp4'}`
+    );
 
     logger.info({ jobId, sourcePath }, 'Step 1: Inspecting video file with FFprobe');
     const metadata = await this.ffmpegService.getVideoMetadata(sourcePath);
@@ -56,7 +59,10 @@ export class VideoProcessingJob extends BaseJob<VideoProcessingJobPayload, void>
 
     let targetSegments: readonly SplitSegmentInput[] = jobMetadata.segments;
     if (!targetSegments || targetSegments.length === 0) {
-      const planned = SegmentPlanner.planFixedIntervalSegments(metadata.durationSeconds || 300, 180);
+      const planned = SegmentPlanner.planFixedIntervalSegments(
+        metadata.durationSeconds || 300,
+        180
+      );
       targetSegments = planned.map((p) => ({
         startTimeSeconds: p.startTimeSeconds,
         endTimeSeconds: p.startTimeSeconds + p.durationSeconds,
@@ -72,9 +78,16 @@ export class VideoProcessingJob extends BaseJob<VideoProcessingJobPayload, void>
 
     // 5. FFmpeg Lossless Splitting (-c copy)
     this.checkCancellation(jobId);
-    logger.info({ jobId, segmentCount: targetSegments.length }, 'Step 3: Executing FFmpeg lossless stream copy (-c copy)');
+    logger.info(
+      { jobId, segmentCount: targetSegments.length },
+      'Step 3: Executing FFmpeg lossless stream copy (-c copy)'
+    );
 
-    const clipPaths = await this.ffmpegService.splitVideoLossless(sourcePath, clipsDir, targetSegments);
+    const clipPaths = await this.ffmpegService.splitVideoLossless(
+      sourcePath,
+      clipsDir,
+      targetSegments
+    );
 
     await this.videoService.updateJobProgress({
       jobId,
@@ -100,7 +113,10 @@ export class VideoProcessingJob extends BaseJob<VideoProcessingJobPayload, void>
     await this.videoService.updateJobStatus(jobId, JobStatus.COMPLETED);
     await this.videoService.updateJobStatus(jobId, JobStatus.READY);
 
-    logger.info({ jobId, clipCount: clipPaths.length }, 'Job Workflow: Video processing completed successfully');
+    logger.info(
+      { jobId, clipCount: clipPaths.length },
+      'Job Workflow: Video processing completed successfully'
+    );
   }
 
   private checkCancellation(jobId: string): void {

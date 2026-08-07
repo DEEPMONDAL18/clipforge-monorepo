@@ -16,7 +16,7 @@ graph TD
     Fastify -->|Resumable Chunked Upload| ResumableService[ResumableUploadService /api/v1/upload]
     ResumableService -->|Dispatch Chunks & Merged Streams| StorageProvider[IStorageProvider Abstraction]
     StorageProvider --> LocalStorage[LocalStorageProvider ./storage/temp, ./storage/uploads, ./storage/logs]
-    
+
     Fastify -->|Enqueue Job with Priority| QueueService[QueueService / BullMQ]
     QueueService -->|video-processing-queue| MainQueue[BullMQ Redis Queue]
     QueueService -->|video-processing-dlq| DLQ[Dead Letter Queue]

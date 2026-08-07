@@ -19,11 +19,7 @@ export const ClipList: React.FC<ClipListProps> = ({ clips, zipDownloadUrl }) => 
           <span>Extracted Clips ({clips.length})</span>
         </h2>
         {zipDownloadUrl && (
-          <Button
-            variant="primary"
-            size="md"
-            onClick={() => window.open(zipDownloadUrl, '_blank')}
-          >
+          <Button variant="primary" size="md" onClick={() => window.open(zipDownloadUrl, '_blank')}>
             <Download className="w-4 h-4 mr-2" />
             Download All (ZIP)
           </Button>
@@ -36,7 +32,8 @@ export const ClipList: React.FC<ClipListProps> = ({ clips, zipDownloadUrl }) => 
             <div>
               <h3 className="font-semibold text-slate-200">{clip.title}</h3>
               <p className="text-xs text-slate-400 mt-1">
-                Duration: {formatSeconds(clip.durationSeconds)} • Size: {formatBytes(clip.sizeBytes)}
+                Duration: {formatSeconds(clip.durationSeconds)} • Size:{' '}
+                {formatBytes(clip.sizeBytes)}
               </p>
             </div>
             <div className="pt-2 flex justify-end">

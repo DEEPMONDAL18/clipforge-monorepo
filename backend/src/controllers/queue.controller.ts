@@ -18,10 +18,7 @@ export class QueueController {
     );
   }
 
-  public static async getQueueStats(
-    _request: FastifyRequest,
-    reply: FastifyReply
-  ): Promise<void> {
+  public static async getQueueStats(_request: FastifyRequest, reply: FastifyReply): Promise<void> {
     const workerService = _request.server.services.worker;
     const stats = await workerService.getQueueMetrics();
 

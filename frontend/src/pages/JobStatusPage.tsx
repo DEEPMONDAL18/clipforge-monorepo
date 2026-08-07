@@ -63,7 +63,8 @@ export const JobStatusPage: React.FC<JobStatusPageProps> = ({ jobId = 'job_sampl
         </div>
 
         <Alert variant="info">
-          All clips have been extracted losslessly. Click individual clip download links or export all as a ZIP file below.
+          All clips have been extracted losslessly. Click individual clip download links or export
+          all as a ZIP file below.
         </Alert>
       </Card>
 

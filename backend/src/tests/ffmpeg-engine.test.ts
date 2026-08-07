@@ -46,8 +46,14 @@ async function runUnitTests(): Promise<void> {
 
     // Negligible remainder test (600.4s split by 200s -> remainder 0.4s merged into segment 3)
     const shortRemainderPlans = SegmentPlanner.planFixedIntervalSegments(600.4, 200);
-    assert(shortRemainderPlans.length === 3, '600.4s split by 200s should yield 3 segments (0.4s merged)');
-    assert(shortRemainderPlans[2]?.durationSeconds === 200.4, 'Segment 3 duration includes 0.4s remainder');
+    assert(
+      shortRemainderPlans.length === 3,
+      '600.4s split by 200s should yield 3 segments (0.4s merged)'
+    );
+    assert(
+      shortRemainderPlans[2]?.durationSeconds === 200.4,
+      'Segment 3 duration includes 0.4s remainder'
+    );
     console.info('✓ SegmentPlanner algorithm calculations verified');
 
     // Test 3: FFmpegService & ZipService Execution

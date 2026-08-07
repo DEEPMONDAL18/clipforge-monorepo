@@ -30,7 +30,9 @@ export class ResumableUploadController {
     }
 
     if (!checksum || checksum.trim() === '') {
-      throw new ValidationError("Missing required mandatory SHA-256 checksum header ('x-chunk-checksum')");
+      throw new ValidationError(
+        "Missing required mandatory SHA-256 checksum header ('x-chunk-checksum')"
+      );
     }
 
     const chunkIndex = parseInt(chunkIndexHeader, 10);

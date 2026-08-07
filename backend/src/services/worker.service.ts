@@ -110,14 +110,15 @@ export class WorkerService {
 
       // Dead Letter Queue (DLQ) Routing on retry exhaustion
       if (job.attemptsMade >= maxRetries) {
-        logger.error({ jobId }, 'Job exhausted maximum retries. Routing to Dead Letter Queue (DLQ)');
+        logger.error(
+          { jobId },
+          'Job exhausted maximum retries. Routing to Dead Letter Queue (DLQ)'
+        );
         await this.videoService.updateJobStatus(jobId, JobStatus.FAILED, err.message);
 
         if (videoProcessingDLQ) {
           const payload: VideoProcessingJobData =
-            job.data.priority !== undefined
-              ? { jobId, priority: job.data.priority }
-              : { jobId };
+            job.data.priority !== undefined ? { jobId, priority: job.data.priority } : { jobId };
           await videoProcessingDLQ.add('dlq-failed-job', payload);
         }
       } else {

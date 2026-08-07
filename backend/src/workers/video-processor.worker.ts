@@ -5,7 +5,9 @@ import { redisConnectionConfig } from '../queue/queue.config.js';
 import { VideoProcessingJobData } from '../queue/video-queue.js';
 import { logger } from '../utils/logger.js';
 
-export function createVideoProcessorWorker(processingJob?: VideoProcessingJob): Worker<VideoProcessingJobData> {
+export function createVideoProcessorWorker(
+  processingJob?: VideoProcessingJob
+): Worker<VideoProcessingJobData> {
   const worker = new Worker<VideoProcessingJobData>(
     APP_CONSTANTS.QUEUE_NAMES.VIDEO_PROCESSING,
     async (bullJob: BullJob<VideoProcessingJobData>) => {

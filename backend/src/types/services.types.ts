@@ -20,7 +20,11 @@ export interface IVideoService {
   getJobClips(jobId: string): Promise<readonly ClipInfo[]>;
   cancelOrDeleteJob(jobId: string): Promise<boolean>;
   updateJobStatus(jobId: string, status: JobStatus, error?: string): Promise<void>;
-  updateJobProgress(progress: { jobId: string; percentage: number; currentStep?: string }): Promise<void>;
+  updateJobProgress(progress: {
+    jobId: string;
+    percentage: number;
+    currentStep?: string;
+  }): Promise<void>;
 }
 
 export interface IFFmpegService {

@@ -33,11 +33,7 @@ export class LocalStorageProvider implements IStorageProvider {
     return fullPath;
   }
 
-  public async saveChunk(
-    uploadId: string,
-    chunkIndex: number,
-    chunkData: Buffer
-  ): Promise<void> {
+  public async saveChunk(uploadId: string, chunkIndex: number, chunkData: Buffer): Promise<void> {
     const chunkDir = path.join(this.tempUploadsDir, uploadId);
     await fsPromises.mkdir(chunkDir, { recursive: true });
 

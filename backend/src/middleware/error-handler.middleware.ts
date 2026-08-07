@@ -35,9 +35,7 @@ export function errorHandlerMiddleware(
     .status(500)
     .send(
       errorResponse(
-        process.env.NODE_ENV === 'production'
-          ? 'An internal server error occurred'
-          : error.message,
+        process.env.NODE_ENV === 'production' ? 'An internal server error occurred' : error.message,
         'INTERNAL_SERVER_ERROR'
       )
     );

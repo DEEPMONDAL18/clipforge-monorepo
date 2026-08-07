@@ -20,7 +20,10 @@ export class ZipGenerationJob extends BaseJob<ZipGenerationJobPayload, string> {
 
   public async execute(context: IJobContext<ZipGenerationJobPayload>): Promise<string> {
     const { jobId, clipPaths } = context.payload;
-    logger.info({ jobId, clipCount: clipPaths.length, jobName: this.name }, 'Job Workflow: Starting ZIP generation');
+    logger.info(
+      { jobId, clipCount: clipPaths.length, jobName: this.name },
+      'Job Workflow: Starting ZIP generation'
+    );
 
     await this.videoService.updateJobStatus(jobId, JobStatus.GENERATING_ZIP);
     const zipPath = await this.zipService.createClipsArchive(jobId, clipPaths);

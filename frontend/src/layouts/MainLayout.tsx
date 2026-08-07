@@ -42,10 +42,17 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       {/* Footer */}
       <footer className="border-t border-slate-800/60 py-6 bg-slate-950/40 text-center text-xs text-slate-500">
         <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p>© {new Date().getFullYear()} ClipForge SaaS Platform. All files automatically deleted after 60 minutes.</p>
+          <p>
+            © {new Date().getFullYear()} ClipForge SaaS Platform. All files automatically deleted
+            after 60 minutes.
+          </p>
           <div className="flex items-center space-x-4">
-            <a href="#docs" className="hover:text-slate-300 transition-colors">Documentation</a>
-            <a href="#api" className="hover:text-slate-300 transition-colors">API Contract</a>
+            <a href="#docs" className="hover:text-slate-300 transition-colors">
+              Documentation
+            </a>
+            <a href="#api" className="hover:text-slate-300 transition-colors">
+              API Contract
+            </a>
           </div>
         </div>
       </footer>

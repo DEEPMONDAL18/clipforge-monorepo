@@ -22,10 +22,7 @@ export class SupabaseService implements ISupabaseService {
     return null;
   }
 
-  public async updateJobRecord(
-    jobId: string,
-    updates: Partial<JobMetadata>
-  ): Promise<void> {
+  public async updateJobRecord(jobId: string, updates: Partial<JobMetadata>): Promise<void> {
     // TODO: Update job record columns in Supabase
     logger.info({ jobId, updates }, 'Supabase DB updateJobRecord (placeholder)');
   }

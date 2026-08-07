@@ -107,11 +107,4 @@ export interface Job {
 }
 
 export type WorkspacePhase =
-  | 'idle'
-  | 'uploading'
-  | 'metadata'
-  | 'queued'
-  | 'processing'
-  | 'ready'
-  | 'expired'
-  | 'failed';
+  'idle' | 'uploading' | 'metadata' | 'queued' | 'processing' | 'ready' | 'expired' | 'failed';

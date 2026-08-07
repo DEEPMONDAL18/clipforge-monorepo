@@ -3,7 +3,10 @@ import { successResponse } from '../utils/response.js';
 
 export class DownloadController {
   public static async downloadJobArtifact(
-    request: FastifyRequest<{ Params: { jobId: string }; Querystring: { clipId?: string; archive?: string } }>,
+    request: FastifyRequest<{
+      Params: { jobId: string };
+      Querystring: { clipId?: string; archive?: string };
+    }>,
     reply: FastifyReply
   ): Promise<void> {
     const { jobId } = request.params;

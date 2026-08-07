@@ -20,7 +20,10 @@ export class CleanupJob extends BaseJob<CleanupJobPayload, void> {
 
   public async execute(context: IJobContext<CleanupJobPayload>): Promise<void> {
     const { jobId, purgeAllExpired } = context.payload;
-    logger.info({ jobId, purgeAllExpired, jobName: this.name }, 'Job Workflow: Starting cleanup execution');
+    logger.info(
+      { jobId, purgeAllExpired, jobName: this.name },
+      'Job Workflow: Starting cleanup execution'
+    );
 
     if (jobId) {
       await this.cleanupService.deleteJobArtifacts(jobId);

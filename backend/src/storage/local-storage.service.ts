@@ -1,10 +1,7 @@
 import { IStorageProvider } from './storage.interface.js';
 
 export class LocalStorageService implements IStorageProvider {
-  public async saveFile(
-    _fileStream: NodeJS.ReadableStream,
-    _targetPath: string
-  ): Promise<string> {
+  public async saveFile(_fileStream: NodeJS.ReadableStream, _targetPath: string): Promise<string> {
     // TODO: Implement stream writing to target path on disk
     return _targetPath;
   }

@@ -1,4 +1,5 @@
 # ClipForge Frontend Design Bible
+
 **Version:** 1.0
 
 **Status:** Draft
@@ -577,31 +578,31 @@ Users should never have to search for where to begin.
 
 ## Landing Layout
 
-------------------------------------------------
+---
 
 Navigation
 
-------------------------------------------------
+---
 
 Hero Section
 
-------------------------------------------------
+---
 
 Upload Card
 
-------------------------------------------------
+---
 
 Features
 
-------------------------------------------------
+---
 
 Frequently Asked Questions
 
-------------------------------------------------
+---
 
 Footer
 
-------------------------------------------------
+---
 
 The Upload Card is the primary call-to-action.
 
@@ -759,27 +760,27 @@ The Processing View becomes the primary focus.
 
 Layout
 
-------------------------------------------------
+---
 
 Progress Card
 
-------------------------------------------------
+---
 
 Pipeline Timeline
 
-------------------------------------------------
+---
 
 Activity Feed
 
-------------------------------------------------
+---
 
 Job Details
 
-------------------------------------------------
+---
 
 Downloads (Disabled)
 
-------------------------------------------------
+---
 
 The layout should remain stable throughout processing.
 
@@ -1087,25 +1088,25 @@ Application
 
 ├── Workspace
 
-│   ├── UploadCard
+│ ├── UploadCard
 
-│   ├── VideoMetadataCard
+│ ├── VideoMetadataCard
 
-│   ├── ClipSettingsCard
+│ ├── ClipSettingsCard
 
-│   ├── ProgressCard
+│ ├── ProgressCard
 
-│   ├── PipelineTimeline
+│ ├── PipelineTimeline
 
-│   ├── ActivityTimeline
+│ ├── ActivityTimeline
 
-│   ├── JobDetailsCard
+│ ├── JobDetailsCard
 
-│   ├── DownloadPanel
+│ ├── DownloadPanel
 
-│   ├── ExpiryCard
+│ ├── ExpiryCard
 
-│   └── ErrorPanel
+│ └── ErrorPanel
 
 └── Footer
 

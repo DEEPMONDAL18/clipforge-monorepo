@@ -26,5 +26,6 @@ npm run format
 ## Git Workflow & Pre-commit Hooks
 
 Husky and `lint-staged` are configured at the repository root. On every commit:
+
 - Modified TS/TSX files are automatically checked with ESLint and Prettier.
 - Unformatted or invalid files will prevent commits until corrected.

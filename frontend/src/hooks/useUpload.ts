@@ -5,7 +5,10 @@ export interface UseUploadResult {
   readonly isUploading: boolean;
   readonly uploadProgressPercentage: number;
   readonly error: string | null;
-  readonly startUpload: (file: File, segments: SplitSegmentInput[]) => Promise<InitUploadResponseDTO | null>;
+  readonly startUpload: (
+    file: File,
+    segments: SplitSegmentInput[]
+  ) => Promise<InitUploadResponseDTO | null>;
 }
 
 export function useUpload(): UseUploadResult {

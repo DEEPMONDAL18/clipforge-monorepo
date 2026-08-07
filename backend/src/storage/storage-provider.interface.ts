@@ -32,11 +32,7 @@ export interface IStorageProvider {
    * Streams and merges chunk files sequentially into target destination path.
    * Returns total merged byte size.
    */
-  mergeChunks(
-    uploadId: string,
-    totalChunksCount: number,
-    destinationPath: string
-  ): Promise<number>;
+  mergeChunks(uploadId: string, totalChunksCount: number, destinationPath: string): Promise<number>;
 
   /**
    * Deletes temporary chunk folder for uploadId.

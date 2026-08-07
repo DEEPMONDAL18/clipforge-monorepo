@@ -27,7 +27,13 @@ export function buildApp(envOverride?: AppEnv): FastifyInstance {
   const videoService = new VideoService();
   const ffmpegService = new FFmpegService();
   const zipService = new ZipService();
-  const workerService = new WorkerService(env, videoService, ffmpegService, storageProvider, zipService);
+  const workerService = new WorkerService(
+    env,
+    videoService,
+    ffmpegService,
+    storageProvider,
+    zipService
+  );
   const queueService = new QueueService(workerService, videoService);
 
   // Attach runtime config & storage provider abstraction

@@ -81,7 +81,10 @@ async function runUnitTests(): Promise<void> {
     // Test 4: Query Upload Status & Missing Chunks
     console.info('▶ Test 4: Query Upload Status');
     const statusBefore = await service.getUploadStatus(initResult.jobId);
-    assert(statusBefore.uploadedChunkIndices.length === 1, 'uploadedChunkIndices length should be 1');
+    assert(
+      statusBefore.uploadedChunkIndices.length === 1,
+      'uploadedChunkIndices length should be 1'
+    );
     assert(statusBefore.missingChunkIndices[0] === 1, 'missingChunkIndices should contain 1');
     console.info('✓ Test 6 Passed');
 
@@ -90,15 +93,13 @@ async function runUnitTests(): Promise<void> {
     const chunk1Data = Buffer.alloc(5242880, 'b');
     const chunk1Hash = crypto.createHash('sha256').update(chunk1Data).digest('hex');
 
-    const finalChunkResult = await service.uploadChunk(
-      initResult.jobId,
-      1,
-      chunk1Data,
-      chunk1Hash
-    );
+    const finalChunkResult = await service.uploadChunk(initResult.jobId, 1, chunk1Data, chunk1Hash);
 
     assert(finalChunkResult.isComplete, 'isComplete should be true after final chunk');
-    assert(finalChunkResult.status === 'QUEUED', 'Job status should automatically transition to QUEUED');
+    assert(
+      finalChunkResult.status === 'QUEUED',
+      'Job status should automatically transition to QUEUED'
+    );
     assert((finalChunkResult.durationSeconds || 0) > 0, 'Extracted FFprobe duration > 0');
     console.info('✓ Test 5 Passed (Automatic Merge & Safe Cleanup Succeeded)');
 

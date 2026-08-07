@@ -106,11 +106,7 @@ export class VideoService implements IVideoService {
     return true;
   }
 
-  public async updateJobStatus(
-    jobId: string,
-    status: JobStatus,
-    error?: string
-  ): Promise<void> {
+  public async updateJobStatus(jobId: string, status: JobStatus, error?: string): Promise<void> {
     const existing = this.mockJobs.get(jobId);
     const now = new Date().toISOString();
 
