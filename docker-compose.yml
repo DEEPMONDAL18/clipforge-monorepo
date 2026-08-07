@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Fastify Backend API Service
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    container_name: clipforge-backend
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+      - HOST=0.0.0.0
+      - API_PREFIX=/api/v1
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - STORAGE_DRIVER=local
+      - STORAGE_ROOT_DIR=/app/storage
+      - STORAGE_TEMP_DIR=/app/storage/temp
+      - UPLOAD_TEMP_DIR=/app/storage/uploads
+      - LOGS_DIR=/app/storage/logs
+    volumes:
+      - clipforge-storage:/app/storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Redis Container for BullMQ Queueing & Caching
+  redis:
+    image: redis:7-alpine
+    container_name: clipforge-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  clipforge-storage:
+    name: clipforge-storage
+  redis-data:
+    name: clipforge-redis-data

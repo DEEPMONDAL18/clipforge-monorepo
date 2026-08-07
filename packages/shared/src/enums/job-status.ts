@@ -1,0 +1,16 @@
+/**
+ * Single source of truth for ClipForge job lifecycle states.
+ */
+export enum JobStatus {
+  UPLOADING = 'UPLOADING',
+  QUEUED = 'QUEUED',
+  WAITING_FOR_WORKER = 'WAITING_FOR_WORKER',
+  PROCESSING = 'PROCESSING',
+  GENERATING_ZIP = 'GENERATING_ZIP',
+  READY = 'READY',
+  COMPLETED = 'COMPLETED',
+  FAILED = 'FAILED',
+  CANCELLED = 'CANCELLED',
+  EXPIRED = 'EXPIRED',
+  DELETED = 'DELETED'
+}
