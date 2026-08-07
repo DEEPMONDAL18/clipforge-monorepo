@@ -24,6 +24,9 @@ jobs:
       - name: Install Workspace Dependencies
         run: npm ci
 
+      - name: Build Shared Package
+        run: npm run build:shared
+
       - name: Verify Code Formatting (Prettier)
         run: npm run format:check
 
