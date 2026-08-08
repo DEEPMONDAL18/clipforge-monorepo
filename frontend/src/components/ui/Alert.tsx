@@ -1,32 +1,51 @@
-import React from 'react';
-import { cn } from '../../lib/utils.js';
+import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'info' | 'warning' | 'error';
-}
+import { cn } from '@/lib/utils';
 
-export const Alert: React.FC<AlertProps> = ({
-  children,
-  className,
-  variant = 'info',
-  ...props
-}) => {
-  const styles = {
-    info: 'bg-sky-950/30 text-sky-200 border-sky-800/50',
-    warning: 'bg-amber-950/30 text-amber-200 border-amber-800/50',
-    error: 'bg-rose-950/30 text-rose-200 border-rose-800/50'
-  };
+const alertVariants = cva(
+  'relative w-full rounded-lg border px-4 py-3 text-sm [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7',
+  {
+    variants: {
+      variant: {
+        default: 'bg-background text-foreground',
+        destructive:
+          'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive',
+        info: 'border-primary/50 text-primary dark:border-primary [&>svg]:text-primary',
+        success: 'border-success/50 text-success dark:border-success [&>svg]:text-success'
+      }
+    },
+    defaultVariants: {
+      variant: 'default'
+    }
+  }
+);
 
-  return (
-    <div
-      className={cn(
-        'p-4 rounded-lg border text-sm flex items-start gap-3',
-        styles[variant],
-        className
-      )}
+const Alert = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
+>(({ className, variant, ...props }, ref) => (
+  <div ref={ref} role="alert" className={cn(alertVariants({ variant }), className)} {...props} />
+));
+Alert.displayName = 'Alert';
+
+const AlertTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
+  ({ className, ...props }, ref) => (
+    <h5
+      ref={ref}
+      className={cn('mb-1 font-medium leading-none tracking-tight', className)}
       {...props}
-    >
-      <div>{children}</div>
-    </div>
-  );
-};
+    />
+  )
+);
+AlertTitle.displayName = 'AlertTitle';
+
+const AlertDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn('text-sm [&_p]:leading-relaxed', className)} {...props} />
+));
+AlertDescription.displayName = 'AlertDescription';
+
+export { Alert, AlertTitle, AlertDescription };
