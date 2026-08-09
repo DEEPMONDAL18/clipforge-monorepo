@@ -1,74 +1,99 @@
-import { ClipInfo } from '@clipforge/shared';
 import React from 'react';
-import { ClipList } from '../components/clips/ClipList.js';
-import { Alert } from '../components/ui/Alert.js';
-import { Badge } from '../components/ui/Badge.js';
-import { Card } from '../components/ui/Card.js';
-import { Progress } from '../components/ui/Progress.js';
+
+import { Workspace } from '@/components/workspace/Workspace';
+import type { Job } from '@/types/job';
 
 export interface JobStatusPageProps {
   jobId?: string;
 }
 
 export const JobStatusPage: React.FC<JobStatusPageProps> = ({ jobId = 'job_sample_123' }) => {
-  // Placeholder mock state demonstrating completed UI layout
-  const mockClips: ClipInfo[] = [
-    {
-      clipId: 'clip_1',
-      jobId,
-      title: 'Opening Segment',
-      fileName: 'clip_1.mp4',
-      durationSeconds: 120,
-      sizeBytes: 45000000,
-      downloadUrl: `/api/v1/download/${jobId}?clipId=clip_1`,
-      createdAt: new Date().toISOString()
+  const mockJob: Job = {
+    id: jobId,
+    status: 'ready',
+    stage: 'ready',
+    createdAt: Date.now() - 120000,
+    metadata: {
+      filename: 'sample_podcast_video.mp4',
+      sizeBytes: 1200000000,
+      durationSeconds: 360,
+      width: 1920,
+      height: 1080,
+      codec: 'h264',
+      audioCodec: 'aac',
+      frameRate: 30
     },
-    {
-      clipId: 'clip_2',
-      jobId,
-      title: 'Action Sequence',
-      fileName: 'clip_2.mp4',
-      durationSeconds: 240,
-      sizeBytes: 95000000,
-      downloadUrl: `/api/v1/download/${jobId}?clipId=clip_2`,
-      createdAt: new Date().toISOString()
-    }
-  ];
+    settings: {
+      clipLengthSeconds: 180
+    },
+    upload: null,
+    progressPercentage: 100,
+    currentClip: 2,
+    totalClips: 2,
+    elapsedSeconds: 45,
+    estimatedRemainingSeconds: 0,
+    queuePosition: null,
+    estimatedWaitSeconds: null,
+    clips: [
+      {
+        id: 'clip_1',
+        index: 1,
+        filename: `${jobId}_clip_001.mp4`,
+        durationSeconds: 180,
+        sizeBytes: 600000000,
+        width: 1920,
+        height: 1080,
+        downloadUrl: `/api/v1/download/${jobId}?clipId=clip_1`
+      },
+      {
+        id: 'clip_2',
+        index: 2,
+        filename: `${jobId}_clip_002.mp4`,
+        durationSeconds: 180,
+        sizeBytes: 600000000,
+        width: 1920,
+        height: 1080,
+        downloadUrl: `/api/v1/download/${jobId}?clipId=clip_2`
+      }
+    ],
+    archive: {
+      filename: `${jobId}_clips.zip`,
+      sizeBytes: 1200000000,
+      downloadUrl: `/api/v1/download/${jobId}?archive=true`
+    },
+    expiresAt: Date.now() + 3480000,
+    activity: [
+      {
+        id: 'act_1',
+        timestamp: Date.now() - 120000,
+        message: 'Upload completed',
+        level: 'info'
+      },
+      {
+        id: 'act_2',
+        timestamp: Date.now() - 90000,
+        message: 'Metadata extracted successfully',
+        level: 'info'
+      },
+      {
+        id: 'act_3',
+        timestamp: Date.now() - 45000,
+        message: 'Processing 2 clips without re-encoding',
+        level: 'info'
+      },
+      {
+        id: 'act_4',
+        timestamp: Date.now(),
+        message: 'Packaging completed — ZIP archive ready',
+        level: 'success'
+      }
+    ],
+    error: null
+  };
 
   return (
-    <div className="space-y-8 max-w-4xl mx-auto">
-      <Card className="space-y-6">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-          <div>
-            <div className="flex items-center space-x-3">
-              <h2 className="text-xl font-bold text-slate-100">Job {jobId}</h2>
-              <Badge variant="success">Ready</Badge>
-            </div>
-            <p className="text-xs text-slate-400 mt-1">File: sample_podcast_video.mp4 (1.2 GB)</p>
-          </div>
-
-          <div className="text-right">
-            <span className="text-xs text-amber-400 bg-amber-950/40 border border-amber-800/40 px-3 py-1 rounded-full">
-              Expires in 58 mins
-            </span>
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <div className="flex justify-between text-xs text-slate-400">
-            <span>Overall Progress</span>
-            <span>100%</span>
-          </div>
-          <Progress value={100} />
-        </div>
-
-        <Alert variant="info">
-          All clips have been extracted losslessly. Click individual clip download links or export
-          all as a ZIP file below.
-        </Alert>
-      </Card>
-
-      <ClipList clips={mockClips} zipDownloadUrl={`/api/v1/download/${jobId}?archive=true`} />
+    <div className="mx-auto max-w-5xl w-full px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+      <Workspace initialJob={mockJob} initialPhase="ready" />
     </div>
   );
 };
