@@ -9,6 +9,7 @@ export * from './constants/error-codes.js';
 export * from './types/clip.types.js';
 export * from './types/job.types.js';
 export * from './types/api.types.js';
+export * from './types/domain.types.js';
 
 // DTOs
 export * from './dto/upload.dto.js';
