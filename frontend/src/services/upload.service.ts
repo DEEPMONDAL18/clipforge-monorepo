@@ -5,45 +5,74 @@ export interface UploadProgressCallback {
   (uploadedBytes: number, totalBytes: number, speedBytesPerSecond: number): void;
 }
 
+export interface UploadStatusResponse {
+  uploadId: string;
+  jobId: string;
+  totalChunks: number;
+  uploadedChunks: number[];
+  completed: boolean;
+}
+
 export class UploadService {
+  /**
+   * Initializes a standard or resumable video upload session with the backend.
+   */
   public static async initUpload(payload: InitUploadRequestDTO): Promise<InitUploadResponseDTO> {
-    return ApiClient.post<InitUploadResponseDTO, InitUploadRequestDTO>('/upload', payload);
+    return ApiClient.post<InitUploadResponseDTO, InitUploadRequestDTO>('/upload/init', payload);
   }
 
+  /**
+   * Uploads a single binary video chunk part with mandatory SHA-256 checksum header.
+   */
   public static async uploadChunk(
     uploadId: string,
     chunkIndex: number,
-    chunkData: Blob,
+    chunkBuffer: ArrayBuffer | Blob,
+    checksum: string,
     options?: { signal?: AbortSignal }
   ): Promise<void> {
-    const formData = new FormData();
-    formData.append('chunkIndex', String(chunkIndex));
-    formData.append('file', chunkData);
-
     const baseUrl = ApiClient.getBaseUrl();
-    const init: RequestInit = {
-      method: 'POST',
-      body: formData
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/octet-stream',
+      'x-chunk-index': String(chunkIndex),
+      'x-chunk-checksum': checksum
     };
+
+    const init: RequestInit = {
+      method: 'PUT',
+      headers
+    };
+    if (chunkBuffer !== undefined) {
+      init.body = chunkBuffer;
+    }
     if (options?.signal) {
       init.signal = options.signal;
     }
 
-    const response = await fetch(`${baseUrl}/upload/${uploadId}/chunks`, init);
+    const response = await fetch(`${baseUrl}/upload/${uploadId}/chunk`, init);
 
     if (!response.ok) {
       throw new Error(`Uploading chunk ${chunkIndex} failed with status ${response.status}`);
     }
   }
 
-  public static async completeUpload(uploadId: string): Promise<{ jobId: string }> {
-    return ApiClient.post<{ jobId: string }>(`/upload/${uploadId}/complete`);
+  /**
+   * Queries the backend for upload session status and uploaded chunk indices.
+   */
+  public static async getUploadStatus(uploadId: string): Promise<UploadStatusResponse> {
+    return ApiClient.get<UploadStatusResponse>(`/upload/${uploadId}/status`);
   }
 
+  /**
+   * Aborts an active upload session and purges temporary stored chunks.
+   */
   public static async abortUpload(uploadId: string): Promise<void> {
     await ApiClient.delete(`/upload/${uploadId}`);
   }
 
+  /**
+   * Utility helper for tracking upload stream progress.
+   */
   public static async uploadVideoFile(
     _uploadUrl: string,
     file: File,
